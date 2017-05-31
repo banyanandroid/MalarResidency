@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/about"
+        android:icon="@mipmap/ic_about_us"
+        android:title="About Us" />
+
+    <item
+        android:id="@+id/rooms"
+        android:icon="@mipmap/ic_rooms"
+        android:title="Rooms" />
+
+    <item
+        android:id="@+id/reach"
+        android:icon="@mipmap/ic_reach"
+        android:title="How To Reach" />
+
+    <item
+        android:id="@+id/contact"
+        android:icon="@mipmap/ic_contact"
+        android:title="Contact Us" />
+
+    <item
+        android:id="@+id/exit"
+        android:icon="@mipmap/ic_exit"
+        android:title="Exit" />
+
+</menu>
