@@ -45,4 +45,9 @@ dependencies {
     // Cardview
     compile 'com.borjabravo:readmoretextview:2.0.1'
     // read more
+    // Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile 'com.github.d-max:spots-dialog:0.4@aar' // Progress view
+    compile 'com.tapadoo.android:alerter:1.0.6'     //Alerter Lib
 }

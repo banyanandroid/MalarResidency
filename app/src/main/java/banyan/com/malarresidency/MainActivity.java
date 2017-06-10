@@ -2,6 +2,8 @@ package banyan.com.malarresidency;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -135,10 +137,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 to_year = c1.get(Calendar.YEAR);
                 to_month = c1.get(Calendar.MONTH);
                 to_date = c1.get(Calendar.DAY_OF_MONTH);
-                   newDate2 = c1.getTime();
+                newDate2 = c1.getTime();
 
                 // Launch Date Picker Dialog
-             dpd1 = new DatePickerDialog(
+                dpd1 = new DatePickerDialog(
                         MainActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
 
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     long diff = date2.getTime() - date1.getTime();
                                     System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
                                     long str_days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) - 1;
-                                    txt_days.setText("" + (str_days + 1 ) + " Nights");
+                                    txt_days.setText("" + (str_days + 1) + " Nights");
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -191,12 +193,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
 
                 System.out.println("PRINT :" + str_from_date);
-                if (str_from_date.equals("DATE")){
-                    Toast.makeText(getApplicationContext(), "Please Select a From Date" , Toast.LENGTH_LONG).show();
-                }else if(str_to_date.equals("DATE")){
-                    Toast.makeText(getApplicationContext(), "Please Select a To Date" , Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (str_from_date.equals("DATE")) {
+                    Toast.makeText(getApplicationContext(), "Please Select a From Date", Toast.LENGTH_LONG).show();
+                } else if (str_to_date.equals("DATE")) {
+                    Toast.makeText(getApplicationContext(), "Please Select a To Date", Toast.LENGTH_LONG).show();
+                } else {
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //Radio button value strings
+                    editor.putString("str_from_date", str_from_date);
+                    editor.putString("str_to_date", str_to_date);
+
+                    editor.commit();
+
+                    System.out.println("str_from_date : " + str_from_date);
+                    System.out.println("str_to_date : " + str_to_date);
+
 
                     Intent i = new Intent(MainActivity.this, Activity_Select_Rooms.class);
                     startActivity(i);
@@ -258,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 finishAffinity();
 
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
