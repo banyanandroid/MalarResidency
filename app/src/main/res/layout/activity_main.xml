@@ -118,7 +118,6 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -131,35 +130,32 @@
                     android:orientation="horizontal"
                     android:weightSum="3">
 
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    <Spinner
                         android:id="@+id/main_spn_no_of_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="No.of.Rooms"
                         android:textColorHint="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="10sp" />
 
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    <Spinner
                         android:id="@+id/main_spn_adults"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="No.Adults"
                         android:textColorHint="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="10sp" />
 
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    <Spinner
                         android:id="@+id/main_spn_childs"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="No.of.Childs"
                         android:textColorHint="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 

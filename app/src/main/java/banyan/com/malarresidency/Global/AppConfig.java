@@ -11,5 +11,7 @@ public class AppConfig {
 
     public static String room_type = base_url + "list_room_type.php";
 
+    public static String room_check = base_url + "add_booking.php";
+
 
 }

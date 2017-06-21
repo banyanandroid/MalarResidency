@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ import banyan.com.malarresidency.Adapter.RoomType_Adapter;
 import banyan.com.malarresidency.Global.AppConfig;
 import dmax.dialog.SpotsDialog;
 
+import static banyan.com.malarresidency.R.id.parent;
+
 /**
  * Created by Jo on 7/18/2016.
  */
@@ -47,9 +50,14 @@ public class Activity_Select_Rooms extends AppCompatActivity implements SwipeRef
     public static RequestQueue queue;
 
     public static final String TAG_ROOM_NAME = "room_type_name";
+    public static final String TAG_ROOM_ID = "room_type_id";
     public static final String TAG_ROOM_PRICE = "room_type_cost";
     public static final String TAG_ROOM_DESC = "room_type_description";
     public static final String TAG_ROOM_PIC = "room_type_img_path";
+
+    public static final String TAG_ROOM_TAX = "room_type_tax";
+    public static final String TAG_ROOM_SERVICE_TAX = "room_type_service_tax";
+    public static final String TAG_ROOM_AVAILABLE_ROOMS = "available_rooms";
 
     String TAG = "Room_Type";
 
@@ -83,6 +91,7 @@ public class Activity_Select_Rooms extends AppCompatActivity implements SwipeRef
         });
 
         List = (ListView) findViewById(R.id.followup_listView);
+        List.setClickable(true);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.followup_swipe_refresh_layout);
 
         // Hashmap for ListView
@@ -117,6 +126,48 @@ public class Activity_Select_Rooms extends AppCompatActivity implements SwipeRef
                                     }
                                 }
         );
+
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String str_room_type = room_list.get(position).get(TAG_ROOM_NAME);
+                String str_room_id = room_list.get(position).get(TAG_ROOM_ID);
+                String str_room_description = room_list.get(position).get(TAG_ROOM_DESC);
+                String str_room_cost = room_list.get(position).get(TAG_ROOM_PRICE);
+                String str_room_img_path = room_list.get(position).get(TAG_ROOM_PIC);
+
+                String str_room_tax = room_list.get(position).get(TAG_ROOM_TAX);
+                String str_room_service_tax = room_list.get(position).get(TAG_ROOM_SERVICE_TAX);
+                String str_room_available = room_list.get(position).get(TAG_ROOM_AVAILABLE_ROOMS);
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("str_room_type", str_room_type);
+                editor.putString("str_room_id", str_room_id);
+                editor.putString("str_room_description", str_room_description);
+                editor.putString("str_room_img_path", str_room_img_path);
+                editor.putString("str_room_available", str_room_available);
+                editor.putString("str_room_cost", str_room_cost);
+
+                editor.putString("str_room_tax", str_room_tax);
+                editor.putString("str_room_service_tax", str_room_service_tax);
+
+                System.out.println("OUTPUT:::::" + str_room_type + str_room_cost + str_room_description +  "tax" + str_room_tax + "servicetax" + str_room_service_tax + "available rooms" + str_room_available);
+
+                editor.commit();
+
+                Intent i = new Intent(getApplicationContext(), Activity_Room_Description.class);
+                startActivity(i);
+
+
+            }
+
+        });
 
     }
 
@@ -156,17 +207,26 @@ public class Activity_Select_Rooms extends AppCompatActivity implements SwipeRef
                         JSONObject obj1 = arr.getJSONObject(i);
 
                         String room_type_name = obj1.getString(TAG_ROOM_NAME);
+                        String room_type_id = obj1.getString(TAG_ROOM_ID);
                         String room_type_description = obj1.getString(TAG_ROOM_DESC);
                         String room_type_cost = obj1.getString(TAG_ROOM_PRICE);
                         String room_type_img_path = obj1.getString(TAG_ROOM_PIC);
+                        String room_type_tax = obj1.getString(TAG_ROOM_TAX);
+                        String room_type_service_tax = obj1.getString(TAG_ROOM_SERVICE_TAX);
+                        String available_rooms = obj1.getString(TAG_ROOM_AVAILABLE_ROOMS);
+
 
                         HashMap<String, String> map = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
                         map.put(TAG_ROOM_NAME, room_type_name);
+                        map.put(TAG_ROOM_ID, room_type_id);
                         map.put(TAG_ROOM_DESC, room_type_description);
                         map.put(TAG_ROOM_PRICE, room_type_cost);
                         map.put(TAG_ROOM_PIC, room_type_img_path);
+                        map.put(TAG_ROOM_TAX, room_type_tax);
+                        map.put(TAG_ROOM_SERVICE_TAX, room_type_service_tax);
+                        map.put(TAG_ROOM_AVAILABLE_ROOMS, available_rooms);
 
                         room_list.add(map);
 
@@ -222,7 +282,6 @@ public class Activity_Select_Rooms extends AppCompatActivity implements SwipeRef
         // Adding request to request queue
         queue.add(request);
     }
-
 
     @Override
     public void onBackPressed() {

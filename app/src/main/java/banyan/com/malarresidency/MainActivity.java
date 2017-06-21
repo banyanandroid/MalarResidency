@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +36,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static long back_pressed;
-    String[] List_Rooms = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-    String[] List_Adults = {"1", "2", "3"};
-    String[] List_Childs = {"1", "2"};
+
+    String[] List_Rooms = {"Rooms","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+    String[] List_Adults = {"Adults","1", "2", "3","4"};
+    String[] List_Childs = {"Childs","0","1", "2"};
+
     int from_year, from_month, from_date;
     int to_year, to_month, to_date;
 
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String str_to_date = "DATE";
     String str_from_date = "DATE";
 
+    Spinner spn_rooms , spn_adults , spn_child;
+
+    String str_no_of_rooms , str_no_of_adults , str_no_of_childs ;
 
     EditText edt_checkin_date, edt_check_out_date;
     TextView txt_days;
@@ -68,21 +75,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Spinners
         ArrayAdapter<String> arrayAdapter_rooms = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, List_Rooms);
-        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)
-                findViewById(R.id.main_spn_no_of_room);
-        materialDesignSpinner.setAdapter(arrayAdapter_rooms);
+         spn_rooms = (Spinner)findViewById(R.id.main_spn_no_of_room);
+        spn_rooms.setAdapter(arrayAdapter_rooms);
 
         ArrayAdapter<String> arrayAdapter_adults = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, List_Adults);
-        MaterialBetterSpinner materialDesignSpinner_adults = (MaterialBetterSpinner)
-                findViewById(R.id.main_spn_adults);
-        materialDesignSpinner_adults.setAdapter(arrayAdapter_adults);
+        spn_adults = (Spinner)findViewById(R.id.main_spn_adults);
+        spn_adults.setAdapter(arrayAdapter_adults);
 
         ArrayAdapter<String> arrayAdapter_child = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, List_Childs);
-        MaterialBetterSpinner materialDesignSpinner_child = (MaterialBetterSpinner)
-                findViewById(R.id.main_spn_childs);
-        materialDesignSpinner_child.setAdapter(arrayAdapter_child);
+        spn_child = (Spinner)findViewById(R.id.main_spn_childs);
+        spn_child.setAdapter(arrayAdapter_child);
+
 
         edt_checkin_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         + formattedMonth + "-"
                                         + formattedDayOfMonth);
 
-                                str_from_date = formattedDayOfMonth + " " + formattedMonth + " " + year;
+                                str_from_date = year + "-" + formattedMonth + "-" + formattedDayOfMonth;
 
                             }
                         }, from_year, from_month, from_date);
@@ -166,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         + formattedMonth1 + "-"
                                         + formattedDayOfMonth1);
 
-                                str_to_date = formattedDayOfMonth1 + " " + formattedMonth1 + " " + year1;
+                                str_to_date = year1 + "-" + formattedMonth1 + "-" + formattedDayOfMonth1;
 
                                 try {
                                     SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
@@ -184,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }, to_year, to_month, to_date);
                 dpd1.show();
 
-
             }
         });
 
@@ -192,11 +196,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
 
+                str_no_of_rooms = spn_rooms.getSelectedItem().toString();
+                str_no_of_adults = spn_adults.getSelectedItem().toString();
+                str_no_of_childs = spn_child.getSelectedItem().toString();
+
                 System.out.println("PRINT :" + str_from_date);
                 if (str_from_date.equals("DATE")) {
                     Toast.makeText(getApplicationContext(), "Please Select a From Date", Toast.LENGTH_LONG).show();
                 } else if (str_to_date.equals("DATE")) {
                     Toast.makeText(getApplicationContext(), "Please Select a To Date", Toast.LENGTH_LONG).show();
+                } else if (str_no_of_rooms.equals("Rooms")) {
+                    Toast.makeText(getApplicationContext(), "Please Select No.of.Rooms", Toast.LENGTH_LONG).show();
+                }  else if (str_no_of_adults.equals("Adults")) {
+                    Toast.makeText(getApplicationContext(), "Please Select No.of.Adults", Toast.LENGTH_LONG).show();
+                } else if (str_no_of_childs.equals("Childs")) {
+                    Toast.makeText(getApplicationContext(), "Please Select No.of.Childs", Toast.LENGTH_LONG).show();
                 } else {
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -204,12 +218,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //Radio button value strings
                     editor.putString("str_from_date", str_from_date);
                     editor.putString("str_to_date", str_to_date);
+                    editor.putString("str_no_of_rooms", str_no_of_rooms);
+                    editor.putString("str_no_of_adults", str_no_of_adults);
+                    editor.putString("str_no_of_childs", str_no_of_childs);
 
                     editor.commit();
 
                     System.out.println("str_from_date : " + str_from_date);
                     System.out.println("str_to_date : " + str_to_date);
-
+                    System.out.println("no.of.Rooms : " + str_no_of_rooms);
+                    System.out.println("no.of.Adults : " + str_no_of_adults);
+                    System.out.println("no.of.Children : " + str_no_of_childs);
 
                     Intent i = new Intent(MainActivity.this, Activity_Select_Rooms.class);
                     startActivity(i);

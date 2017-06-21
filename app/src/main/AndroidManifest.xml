@@ -34,6 +34,9 @@
             android:name=".Activity_Checkout"
             android:label="Select Payment"
             android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".Activity_Room_Description"
+            android:label="Selected Room"></activity>
     </application>
 
 </manifest>

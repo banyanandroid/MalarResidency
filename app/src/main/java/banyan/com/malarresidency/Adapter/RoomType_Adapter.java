@@ -56,7 +56,7 @@ public class RoomType_Adapter extends BaseAdapter {
 
         TextView room_title = (TextView) v.findViewById(R.id.room_type_name);
         TextView room_cost = (TextView) v.findViewById(R.id.room_type_cost);
-        ReadMoreTextView room_des = (ReadMoreTextView) v.findViewById(R.id.room_type_description);
+        TextView room_des = (TextView) v.findViewById(R.id.room_type_description);
         ImageView room_img = (ImageView) v.findViewById(R.id.room_type_img);
 
         HashMap<String, String> result = new HashMap<String, String>();
@@ -77,7 +77,6 @@ public class RoomType_Adapter extends BaseAdapter {
         }catch (Exception e){
 
         }
-
         return v;
 
     }

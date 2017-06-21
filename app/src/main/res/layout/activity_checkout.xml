@@ -32,7 +32,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -54,7 +54,8 @@
                             android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:hint="First Name"
+                            android:hint="First Name *"
+                            android:inputType="text"
                             android:singleLine="true" />
 
                         <requestFocus />
@@ -75,11 +76,11 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:hint="Last Name"
+                            android:inputType="text"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
-
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/input_layout_mobile"
@@ -94,8 +95,9 @@
                         android:layout_marginRight="15dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Contact Number"
+                        android:hint="Contact Number *"
                         android:inputType="number"
+                        android:maxLength="10"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -112,7 +114,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Email"
+                        android:hint="Email *"
                         android:inputType="textEmailAddress"
                         android:singleLine="true" />
 
@@ -131,14 +133,31 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/reg_edt_Address"
+                        android:id="@+id/guest_edt_Address_line1"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Address"
+                        android:hint="Address Line 1 *"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_Address_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/guest_edt_Address_line2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="Address Line 2"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -150,12 +169,12 @@
                     <EditText
                         android:id="@+id/guest_edt_City"
                         android:layout_width="fill_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="City"
+                        android:hint="City *"
+                        android:inputType="text"
                         android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -174,12 +193,13 @@
 
                         <EditText
                             android:id="@+id/guest_edt_State"
-                            android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:hint="State"
+                            android:hint="State *"
+                            android:inputType="text"
                             android:singleLine="true" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -192,12 +212,13 @@
 
                         <EditText
                             android:id="@+id/guest_edt_Country"
-                            android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="15dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:hint="Country"
+                            android:hint="Country *"
+                            android:inputType="text"
                             android:singleLine="true" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -213,13 +234,13 @@
                     <EditText
                         android:id="@+id/guest_edt_Post_Code"
                         android:layout_width="fill_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Post Code"
+                        android:hint="Post Code *"
                         android:inputType="number"
+                        android:maxLength="6"
                         android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -245,9 +266,8 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-
                     <Button
-                        android:id="@+id/guest_btn_register"
+                        android:id="@+id/guest_btn_arrival_time"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_marginRight="15dp"
@@ -260,29 +280,26 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <TextView
+                    <CheckBox
+                        android:id="@+id/guest_chb_pickup"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Select Payment"
-                        android:textColor="@color/txt_gray"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:text="Pick Up Facility" />
 
-                    <Spinner
+                    <CheckBox
+                        android:id="@+id/guest_chb_drop"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="15dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:entries="@array/payment"></Spinner>
+                        android:text="Drop Facility" />
 
                 </LinearLayout>
 
