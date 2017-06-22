@@ -49,11 +49,11 @@ public class Activity_Checkout extends AppCompatActivity implements TimePickerDi
 
     String str_fname, str_lname, str_contact_num, str_email, str_add_line1, str_add_line2,
             str_city, str_state, str_country, str_postcode, str_arrival_time, str_room_type,
-            str_room_cost, str_room_tax, str_room_service_tax, str_total_cost = "";
+            str_room_cost, str_room_tax, str_room_service_tax, str_total_cost = "null";
 
-    String str_pickup, str_drop = "NO";
+    String str_pickup, str_drop = "null";
 
-    String str_from_date, str_to_date, str_no_of_rooms, str_no_of_adults, str_no_of_childs = "";
+    String str_from_date, str_to_date, str_no_of_rooms, str_no_of_adults, str_no_of_childs = "null";
 
     ImageView img_back;
     String TAG;
@@ -101,24 +101,6 @@ public class Activity_Checkout extends AppCompatActivity implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                SharedPreferences sharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(getApplicationContext());
-
-                //From Main Activity
-                str_from_date = sharedPreferences.getString("str_from_date", "str_from_date");
-                str_to_date = sharedPreferences.getString("str_to_date", "str_to_date");
-                str_no_of_rooms = sharedPreferences.getString("str_no_of_rooms", "str_no_of_rooms");
-                str_no_of_adults = sharedPreferences.getString("str_no_of_adults", "str_no_of_adults");
-                str_no_of_childs = sharedPreferences.getString("str_no_of_childs", "str_no_of_childs");
-                //From Select Rooms Activity
-                str_room_type = sharedPreferences.getString("str_room_id", "str_room_id");
-                str_room_cost = sharedPreferences.getString("str_room_cost", "str_room_cost");
-
-                //From Room Description Activity
-                str_room_tax = sharedPreferences.getString("str_room_new_tax", "str_room_new_tax");
-                str_room_service_tax = sharedPreferences.getString("str_room_new_service_tax", "str_room_new_service_tax");
-                str_total_cost = sharedPreferences.getString("str_total_cost", "str_total_cost");
-
                 str_fname = guest_edt_fname.getText().toString();
                 str_lname = guest_edt_lname.getText().toString();
                 str_contact_num = guest_edt_contact_num.getText().toString();
@@ -131,22 +113,65 @@ public class Activity_Checkout extends AppCompatActivity implements TimePickerDi
                 str_postcode = guest_edt_postcode.getText().toString();
 
                 if (chb_pickup.isChecked()) {
-
                     str_pickup = "YES";
-
+                } else {
+                    str_pickup = "NO";
                 }
                 if (chb_drop.isChecked()) {
-
                     str_drop = "YES";
-
+                } else {
+                    str_drop = "NO";
                 }
 
-                try {
-                    queue = Volley.newRequestQueue(Activity_Checkout.this);
-                    GetGuest_Details();
+                if (str_fname.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "FirstName Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_fname.setError("Enter FirstName");
+                } else if (str_contact_num.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "Contact Number Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_contact_num.setError("Enter Contact Number");
+                } else if (str_email.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "Email Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_email.setError("Enter Email");
+                } else if (str_add_line1.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "AddressLine 1 Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_ad_line1.setError("Enter AddressLine 1");
+                } else if (str_city.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "City Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_city.setError("Enter City");
+                } else if (str_state.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "State Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_state.setError("Enter State");
+                } else if (str_country.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "Country Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_country.setError("Enter Country");
+                } else if (str_postcode.equals("null")) {
+                    Toast.makeText(getApplicationContext(), "Postcode Cannot be Empty", Toast.LENGTH_LONG).show();
+                    guest_edt_postcode.setError("Enter Postcode");
+                } else {
 
-                } catch (Exception e) {
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext());
 
+                    //From Main Activity
+                    str_from_date = sharedPreferences.getString("str_from_date", "str_from_date");
+                    str_to_date = sharedPreferences.getString("str_to_date", "str_to_date");
+                    str_no_of_rooms = sharedPreferences.getString("str_no_of_rooms", "str_no_of_rooms");
+                    str_no_of_adults = sharedPreferences.getString("str_no_of_adults", "str_no_of_adults");
+                    str_no_of_childs = sharedPreferences.getString("str_no_of_childs", "str_no_of_childs");
+                    //From Select Rooms Activity
+                    str_room_type = sharedPreferences.getString("str_room_id", "str_room_id");
+                    str_room_cost = sharedPreferences.getString("str_room_cost", "str_room_cost");
+                    //From Room Description Activity
+                    str_room_tax = sharedPreferences.getString("str_room_new_tax", "str_room_new_tax");
+                    str_room_service_tax = sharedPreferences.getString("str_room_new_service_tax", "str_room_new_service_tax");
+                    str_total_cost = sharedPreferences.getString("str_total_cost", "str_total_cost");
+
+                    try {
+                        queue = Volley.newRequestQueue(Activity_Checkout.this);
+                        GetGuest_Details();
+                    } catch (Exception e) {
+
+                    }
                 }
 
             }

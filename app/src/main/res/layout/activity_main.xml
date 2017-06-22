@@ -134,8 +134,7 @@
                         android:id="@+id/main_spn_no_of_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_weight="1.1"
                         android:textColorHint="@color/colorAccent"
                         android:textSize="10sp" />
 
@@ -143,8 +142,7 @@
                         android:id="@+id/main_spn_adults"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_weight="0.95"
                         android:textColorHint="@color/colorAccent"
                         android:textSize="10sp" />
 
@@ -152,8 +150,7 @@
                         android:id="@+id/main_spn_childs"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_weight="0.95"
                         android:textColorHint="@color/colorAccent"
                         android:textSize="10sp" />
 

@@ -29,7 +29,7 @@ public class Activity_Room_Description extends AppCompatActivity {
 
     Button btn_book_now;
 
-    String str_room_type, str_room_description, str_room_cost, str_room_img_path,
+    String str_req_rooms, str_room_type, str_room_description, str_room_cost, str_room_img_path,
             str_room_img, str_room_available, str_total_cost, str_room_tax, str_room_service_tax;
 
     String str_room_new_tax, str_room_new_service_tax;
@@ -70,13 +70,25 @@ public class Activity_Room_Description extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int r = Integer.parseInt(str_room_available);
-                if (r == 0) {
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext());
+
+                str_req_rooms = sharedPreferences.getString("str_no_of_rooms", "str_no_of_rooms");
+
+                int req_rooms = Integer.parseInt(str_room_available);
+
+                int avail_rooms = Integer.parseInt(str_req_rooms);
+
+                if (req_rooms == 0) {
                     Alerter.create(Activity_Room_Description.this)
                             .setTitle("Malar Residency")
                             .setText("Sorry..! All " + str_room_type + " rooms are currently Occupied")
                             .setBackgroundColor(R.color.bg_screen3)
                             .show();
+                } else if (req_rooms > avail_rooms) {
+
+                    Toast.makeText(getApplicationContext(), "Sorry...! only " + str_room_available + "rooms are available in this type.", Toast.LENGTH_LONG).show();
+
                 } else {
 
                     Intent i = new Intent(getApplicationContext(), Activity_Checkout.class);
