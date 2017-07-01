@@ -29,8 +29,12 @@ public class Activity_Room_Description extends AppCompatActivity {
 
     Button btn_book_now;
 
+    String str_no_of_nights;
+
+    long no_of_nights;
+
     String str_req_rooms, str_room_type, str_room_description, str_room_cost, str_room_img_path,
-            str_room_img, str_room_available, str_total_cost, str_room_tax, str_room_service_tax;
+            str_room_img, str_room_available, str_total_cost, str_room_tax, str_room_service_tax,str_no_of_rooms;
 
     String str_room_new_tax, str_room_new_service_tax;
 
@@ -66,6 +70,15 @@ public class Activity_Room_Description extends AppCompatActivity {
 
         btn_book_now = (Button) findViewById(R.id.room_desc_book_btn);
 
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+
+        str_no_of_nights = sharedPreferences.getString("str_no_of_nights", "str_no_of_nights");
+        str_no_of_rooms = sharedPreferences.getString("str_no_of_rooms", "str_no_of_rooms");
+
+        no_of_nights = Long.parseLong(str_no_of_nights);
+
+
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,11 +88,13 @@ public class Activity_Room_Description extends AppCompatActivity {
 
                 str_req_rooms = sharedPreferences.getString("str_no_of_rooms", "str_no_of_rooms");
 
-                int req_rooms = Integer.parseInt(str_room_available);
+                str_room_img = sharedPreferences.getString("str_no_of_nights", "str_no_of_nights");
 
-                int avail_rooms = Integer.parseInt(str_req_rooms);
+                int req_rooms = Integer.parseInt(str_req_rooms);
 
-                if (req_rooms == 0) {
+                int avail_rooms = Integer.parseInt(str_room_available);
+
+                if (avail_rooms == 0) {
                     Alerter.create(Activity_Room_Description.this)
                             .setTitle("Malar Residency")
                             .setText("Sorry..! All " + str_room_type + " rooms are currently Occupied")
@@ -87,7 +102,7 @@ public class Activity_Room_Description extends AppCompatActivity {
                             .show();
                 } else if (req_rooms > avail_rooms) {
 
-                    Toast.makeText(getApplicationContext(), "Sorry...! only " + str_room_available + "rooms are available in this type.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Sorry...! only " + str_room_available + " Rooms  are available in this type.", Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -98,7 +113,8 @@ public class Activity_Room_Description extends AppCompatActivity {
             }
         });
 
-        SharedPreferences sharedPreferences = PreferenceManager
+
+        SharedPreferences sharedPreferences_one = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
         str_room_type = sharedPreferences.getString("str_room_type", "str_room_type");
@@ -113,17 +129,22 @@ public class Activity_Room_Description extends AppCompatActivity {
 
         try {
 
-            float cost, tax, service_tax;
-            float room_cost, room_tax, room_service_tax;
-            int room_total_cost;
+            // Calculating the Cost of the room by multipling with no.of.nights required and no.of.rooms required
 
+            float total_rooms , cost, tax, service_tax;
+            float room_cost, room_cost_temp, room_tax, room_service_tax;
+            long room_total_cost;
+
+            total_rooms = Float.parseFloat(str_no_of_rooms);
             cost = Float.parseFloat(str_room_cost);
             tax = Float.parseFloat(str_room_tax);
             service_tax = Float.parseFloat(str_room_service_tax);
 
             room_tax = (cost * tax) / 100;
             room_service_tax = (cost * service_tax) / 100;
-            room_cost = room_tax + room_service_tax + cost;
+            room_cost_temp = room_tax + room_service_tax + cost;
+            room_cost = room_cost_temp * no_of_nights * total_rooms;
+
 
             room_total_cost = (int) room_cost;
 
@@ -135,7 +156,10 @@ public class Activity_Room_Description extends AppCompatActivity {
         } catch (Exception e) {
 
         }
+
         try {
+
+            System.out.println("OUTTTTTTTTTTTTTTTTT::::::::::::::::::::" + str_total_cost);
             txt_room_type.setText(str_room_type);
             txt_room_desc.setText(str_room_description);
             txt_available_rooms.setText(str_room_available);

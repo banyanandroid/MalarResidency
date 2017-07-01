@@ -174,7 +174,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:layout_weight="0.9"
-                            android:text="Room Cost"
+                            android:text="Room Cost (per night)"
                             android:textColor="@color/cardview_dark_background"
                             android:textSize="16sp"
                             android:textStyle="normal" />

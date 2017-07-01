@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int from_year, from_month, from_date;
     int to_year, to_month, to_date;
 
-    DatePickerDialog dpd1;
+    DatePickerDialog dpd, dpd1;
     Date newDate2;
+    Calendar cal1;
 
     // String
     String str_to_date = "DATE";
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Spinner spn_rooms , spn_adults , spn_child;
 
     String str_no_of_rooms , str_no_of_adults , str_no_of_childs ;
+
+    String str_nights;
+    long lng_no_of_nights;
 
     EditText edt_checkin_date, edt_check_out_date;
     TextView txt_days;
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         edt_check_out_date = (EditText) findViewById(R.id.main_edt_checkout);
         txt_days = (TextView) findViewById(R.id.main_txt_nights);
         btn_book = (Button) findViewById(R.id.main_btn_booknow);
+
+        cal1 = Calendar.getInstance();
 
         // Spinners
         ArrayAdapter<String> arrayAdapter_rooms = new ArrayAdapter<String>(this,
@@ -99,8 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 from_date = c.get(Calendar.DAY_OF_MONTH);
 
                 // Launch Date Picker Dialog
-                DatePickerDialog dpd = new DatePickerDialog(
+                 dpd = new DatePickerDialog(
                         MainActivity.this,
+
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -124,10 +131,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         + formattedMonth + "-"
                                         + formattedDayOfMonth);
 
-                                str_from_date = year + "-" + formattedMonth + "-" + formattedDayOfMonth;
+                                str_from_date = formattedDayOfMonth + " " + formattedMonth + " " + year;
 
                             }
                         }, from_year, from_month, from_date);
+                dpd.getDatePicker().setMinDate(System.currentTimeMillis());  //to disable the selection of past dates
                 dpd.show();
 
 
@@ -171,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         + formattedMonth1 + "-"
                                         + formattedDayOfMonth1);
 
-                                str_to_date = year1 + "-" + formattedMonth1 + "-" + formattedDayOfMonth1;
+                                str_to_date = formattedDayOfMonth1 + " " + formattedMonth1 + " " + year1;
 
                                 try {
                                     SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
@@ -181,12 +189,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
                                     long str_days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) - 1;
                                     txt_days.setText("" + (str_days + 1) + " Nights");
+                                    System.out.println("DAYSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"+(str_days + 1));
+                                    lng_no_of_nights  = str_days + 1;
+                                    System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDAYS"+lng_no_of_nights);
+                                    str_nights = String.valueOf(lng_no_of_nights);
+                                    System.out.println("DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYS"+str_nights);
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
 
                             }
                         }, to_year, to_month, to_date);
+
+                dpd1.getDatePicker().setMinDate(System.currentTimeMillis()); //to disable the selection of past dates
                 dpd1.show();
 
             }
@@ -221,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editor.putString("str_no_of_rooms", str_no_of_rooms);
                     editor.putString("str_no_of_adults", str_no_of_adults);
                     editor.putString("str_no_of_childs", str_no_of_childs);
+                    editor.putString("str_no_of_nights", str_nights);
 
                     editor.commit();
 
